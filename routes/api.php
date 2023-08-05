@@ -18,6 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::ApiResource('client', \App\Http\Controllers\Api\ClientController::class);
-Route::ApiResource('disc', \App\Http\Controllers\Api\DiscController::class);
-Route::ApiResource('order', \App\Http\Controllers\Api\OrderController::class);
+
+Route::get('transactions', \App\Http\Controllers\Api\TransactionController::class, 'index');
+Route::post('transfer', \App\Http\Controllers\Api\TransactionController::class, 'transfer');
+Route::put('reverse', \App\Http\Controllers\Api\TransactionController::class, 'reverse');
+Route::ApiResource('user', \App\Http\Controllers\Api\UserController::class);

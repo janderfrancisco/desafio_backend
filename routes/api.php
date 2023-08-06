@@ -19,7 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('transactions', \App\Http\Controllers\Api\TransactionController::class, 'index');
-Route::post('transfer', \App\Http\Controllers\Api\TransactionController::class, 'transfer');
-Route::put('reverse', \App\Http\Controllers\Api\TransactionController::class, 'reverse');
+Route::controller(\App\Http\Controllers\Api\TransactionController::class)->group(function(){
+    Route::get('transactions', 'index');
+    Route::post('transfer', 'transfer');
+    Route::post('reverse', 'reverse');
+});
+ 
 Route::ApiResource('user', \App\Http\Controllers\Api\UserController::class);

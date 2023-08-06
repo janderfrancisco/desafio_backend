@@ -40,10 +40,17 @@ class TransactionController extends Controller
     public function transfer(StoreTransactionRequest $request)
     {
         $data = $request->validated();
+        $authorizer = $this->authorizer->authorizeTransaction($data);
 
+        echo '<pre>';
+            print_r($authorizer);
+        echo '</pre>';
+        // se não autorizado, retorna erro
+        if(!$authorizer['message'] == 'Autorizado'){
+            return response()->json(['message' => 'Transação não autorizada'], 401);
+        }
 
-
-
+        
     }
 
     /**

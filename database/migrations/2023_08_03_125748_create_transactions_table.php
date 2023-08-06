@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->unsignedBigInteger('payer_id');
             $table->foreign("payer_id", 'payer_id_fk')->references("id")->on("users");
             $table->unsignedBigInteger('payee_id');

@@ -10,17 +10,31 @@ class Transaction extends Model
     use HasFactory;
     use Traits\Uuid;
 
+    public const STATUS_OF_TRANSACTION = [
+        'pending' => 'pending',
+        'completed' => 'completed',
+        'canceled' => 'canceled'
+    ];
+
     protected $fillable = [
-        'payer_id',
-        'payee_id',
+        'payer',
+        'payee',
         'value',
-        'uuid'
+        'uuid',
+        'was_notified',
+        'was_notified_at',
+        'was_reversed',
+        'was_reversed_at'
     ];
 
     protected $casts = [
-        'id'        => 'string',
+        'id'         => 'string',
         'created_at' => 'datetime:Y-m-d H:i:s',
-        'updated_at' => 'datetime:Y-m-d H:i:s'
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+        'was_notified' => 'boolean',
+        'was_reversed' => 'boolean',
+        'was_reversed_at' => 'datetime:Y-m-d H:i:s',
+        'was_notified_at' => 'datetime:Y-m-d H:i:s'
     ];
 
     protected $dates = [
@@ -28,14 +42,14 @@ class Transaction extends Model
         'updated_at'
     ];
 
-    public function payer()
+    public function payerUser()
     {
-        return $this->belongsTo(User::class, 'payer_id');
+        return $this->belongsTo(User::class, 'payer');
     }
 
-    public function payee()
+    public function payeeUser()
     {
-        return $this->belongsTo(User::class, 'payee_id');
+        return $this->belongsTo(User::class, 'payee');
     }
 
 }

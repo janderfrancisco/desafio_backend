@@ -11,22 +11,32 @@ class Notifier
 
     public function __construct()
     {
-        $this->base_url = config('services.notifier.base_url');
+        $this->base_url = config('notifier.base_url');
     }
 
     /**
      * authorizeTtransaction
-     *
+     * Função responsável por enviar notificações das transações
+     *  a função tem timeout de 2 segundos. caso não consiga, retorna false
      * @return bool
      */
     public function notification()
     {
 
-        $response = Http::get($this->base_url, []);
+        try {
+            $response = Http::timeout(2)->get($this->base_url, []);
+        } catch (\Exception $e) {
+            return false;
+        }
 
-        echo '<pre>';
-            print_r($response->json());
-        echo '</pre>';
+        if ($response->failed()) 
+            return false;
+        
+        if ($response->status() == 200){
+            if ($response->json()['message'] == 'Enviado')
+                return true;
+        }
 
+        return false;
     }
 }

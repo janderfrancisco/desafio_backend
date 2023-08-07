@@ -17,7 +17,9 @@ class TransactionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'payer' => 1,
+            'payee' => 2,
+            'value' => 1,
         ];
     }
 }

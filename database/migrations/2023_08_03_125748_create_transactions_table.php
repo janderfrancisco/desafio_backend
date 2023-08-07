@@ -16,18 +16,19 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->unsignedBigInteger('payer_id');
-            $table->foreign("payer_id", 'payer_id_fk')->references("id")->on("users");
-            $table->unsignedBigInteger('payee_id');
-            $table->foreign("payee_id", 'payee_id_fk')->references("id")->on("users");
+            $table->unsignedBigInteger('payer');
+            $table->foreign("payer", 'payer_fk')->references("id")->on("users");
+            $table->unsignedBigInteger('payee');
+            $table->foreign("payee", 'payee_fk')->references("id")->on("users");
             $table->decimal('value', 10, 2);
-            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
+            $table->enum('status', ['pending', 'completed', 'canceled'])->default('completed');
             $table->enum('type', ['transfer', 'deposit', 'withdraw'])->default('transfer');
             $table->string('description')->nullable();
             $table->string('authorization_code')->nullable();
-            $table->string('was_notified')->nullable();
-            $table->string('was_notified_at')->nullable();
+            $table->boolean('was_notified')->nullable();
+            $table->dateTime('was_notified_at')->nullable();
             $table->string('was_reversed')->nullable();
+            $table->dateTime('was_reversed_at')->nullable();
             $table->timestamps();
         });
     }

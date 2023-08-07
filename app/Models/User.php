@@ -15,7 +15,15 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'document',
+        'type',
+        'wallet',
         'password',
+    ];
+
+    public const TYPE_OF_USER = [
+        'client' => 'client',
+        'seller' => 'seller'
     ];
 
     protected $hidden = [
@@ -29,6 +37,10 @@ class User extends Authenticatable
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        if ($this->type === self::TYPE_OF_USER['client']) 
+            return $this->hasMany(Transaction::class, 'payer_id');
+        else if ($this->type === self::TYPE_OF_USER['seller'])
+            return $this->hasMany(Transaction::class, 'payee_id');
+
     }
 }

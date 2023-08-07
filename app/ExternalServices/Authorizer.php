@@ -11,7 +11,7 @@ class Authorizer
 
     public function __construct()
     {
-        $this->base_url = config('services.authorizer.base_url');
+        $this->base_url = config('authorizer.base_url');
     }
 
     /**
@@ -25,12 +25,15 @@ class Authorizer
      */
     public function authorizeTransaction()
     {
+        $response = Http::retry(3,250)->timeout(2)->get($this->base_url);
 
-        $response = Http::retry(3,250)->get($this->base_url, []);
+        // if response status
+        if ($response->status() == 200){
 
-        echo '<pre>';
-            print_r($response->json());
-        echo '</pre>';
+            if ($response->json()['message'] == 'Autorizado')
+                return true;
+        }
 
+        return false;
     }
 }

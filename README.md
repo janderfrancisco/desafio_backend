@@ -1,13 +1,11 @@
 
 # API
 
-Api desenvolvida utilizando PHP e Laravel Framework com Laravel Octane.
-O motivo da utilização do Octane é que ele adiciona a aplicação em memória após o primeiro uso, fazendo assim com as próximas requisições sejam mais rápidas.
-
+Api desenvolvida utilizando PHP e Laravel Framework.
 
 --- 
 ### Documentação da api
-[https://documenter.getpostman.com/view/928811/2s9XxvTFE9](https://documenter.getpostman.com/view/928811/2s9XxvTFE9)
+[https://documenter.getpostman.com/view/928811/2s9XxzuCYN](https://documenter.getpostman.com/view/928811/2s9XxzuCYN)
 
 
 
@@ -18,7 +16,7 @@ Clone este repositório
 acesse a pasta do projeto
  
 ```sh
-cd api_test/
+cd desafio_backend/
 ```
 
 Crie o Arquivo .env baseado no arquivo env.example
@@ -35,7 +33,7 @@ APP_URL=http://localhost:8989
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=laravel
+DB_DATABASE=api
 DB_USERNAME=root
 DB_PASSWORD=root
 
@@ -95,37 +93,11 @@ php artisan test
 ```
 Devera aparece algo semelhante a isso:
 
-<img src="https://raw.githubusercontent.com/janderfrancisco/api_test/main/public/assets/test.png">
+<img src="https://github.com/janderfrancisco/desafio_backend/blob/main/public/assets/tests.png">
 
-
-
+ 
 --- 
-### Teste de Carga e LoadBalancer
+### Proposta de Estrutura da aplicação 
 
-Como foi descrito no desafio, a aplicação irá receber uma elevada quantidade de acessos em um determinado período. após o lançamento de um CD.
-
-Para atender essa demanda foi criado um load balancer com um lauch templade de uma máquina ec2 com a imagem da aplicação já rodando. 
-O loadbalance pode escalar até 4 máquinas se o uso de CPU passar de 70%, conforme imagem abaixo:
-
-<img src="https://raw.githubusercontent.com/janderfrancisco/api_test/main/public/assets/autoscaling.png">
-
-Através do Vegeta [https://github.com/tsenart/vegeta](https://github.com/tsenart/vegeta)
-
-Para executar o testar, adicione 10% a mais de acessos que seria esperado
-
-```
-echo "GET http:///load-balancer-app-1821911745.us-east-2.elb.amazonaws.com/" | vegeta attack -durantion=60s -rate=3300
-```
-Esse loadbalance não está no disponivel mais, por questão de custo. Fiz os testes e o apaguei.
-
-
-
---- 
-### Estrutura da aplicação
-
-<img src="https://raw.githubusercontent.com/janderfrancisco/api_test/main/public/assets/estrutura.png">
-
-
-Outra opção é utilizando Kubernetes 
-
-
+<img src="https://github.com/janderfrancisco/desafio_backend/blob/main/public/assets/estrutura.jpg">
+ 
